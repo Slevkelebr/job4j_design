@@ -2,9 +2,7 @@ package ru.job4j.kiss;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -19,12 +17,7 @@ public class MaxMinTest {
                 new What("those", "often")
         );
         MaxMin maxMini = new MaxMin();
-        Comparator comparator = (o1, o2) -> {
-            What left = (What) o1;
-            What right = (What) o2;
-            return left.getWhen().length() - right.getWhen().length();
-        };
-        What result = maxMini.max(list, comparator);
+        What result = maxMini.max(list, (left, right) -> left.getWhen().length() - right.getWhen().length());
 
         What expected = new What("there", "yesterday");
 
@@ -39,12 +32,7 @@ public class MaxMinTest {
                 new What("those", "often")
         );
         MaxMin maxMini = new MaxMin();
-        Comparator comparator = (o1, o2) -> {
-            What left = (What) o1;
-            What right = (What) o2;
-            return left.getWhen().length() - right.getWhen().length();
-        };
-        What result = maxMini.min(list, comparator);
+        What result = maxMini.min(list, (left, right) -> left.getWhen().length() - right.getWhen().length());
 
         What expected = new What("here", "now");
 
