@@ -9,11 +9,9 @@ public class MaxMin {
 
     public <T> T reduce(List<T> value, BiPredicate<T, T> predicate) {
         T result = null;
-        Iterator<T> i = value.iterator();
-        for (T t : value) {
-            T y = i.next();
-            if (predicate.test(t, y)) {
-                result = t;
+        for (int i = 0; i < value.size() - 1; i++) {
+            if (predicate.test(value.get(i), value.get(i + 1))) {
+                result = value.get(i);
             }
         }
         return result;
