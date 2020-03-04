@@ -39,11 +39,8 @@ public class TemplatesTest {
         Templates templates = new SimpleGenerator();
         String text = "Help, ${sos}, ${sos}, ${sos}!";
         Map<String, String> data = new HashMap<>();
-        String expected = "Help, Aaa, Aaa, Aaa!";
-
         String result = templates.generate(text, data);
 
-        assertThat(result, is(expected));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -51,11 +48,8 @@ public class TemplatesTest {
         Templates templates = new SimpleGenerator();
         String text = "Help, ${sos}, ${sos}, ${sos}!";
         Map<String, String> data = Map.of("sos", "Aaa", "name", "Petr");
-        String expected = "Help, Aaa, Aaa, Aaa!";
-
         String result = templates.generate(text, data);
 
-        assertThat(result, is(expected));
     }
 
 }
