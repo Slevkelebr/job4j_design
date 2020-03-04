@@ -6,14 +6,23 @@ public class SimpleGenerator implements Templates {
 
     @Override
     public String generate(String template, Map<String, String> date) {
+        if (date.isEmpty()) {
+            throw new IllegalArgumentException("Коллекция пуста.");
+        }
         String[] strings = template.split(" ");
         List<String> tmp = Arrays.asList(strings);
         for (var key : date.entrySet()) {
-            for (var i = 0; i < tmp.size(); i++) {
-                if (tmp.get(i).contains(key.getKey())) {
-                    StringBuilder sbt = new StringBuilder(tmp.get(i));
-                    sbt.replace(0, tmp.get(i).length() - 1, key.getValue());
-                    tmp.set(i, new String(sbt));
+            int index = 0;
+            for (var word : tmp) {
+                if (word.contains(key.getKey())) {
+                    StringBuilder sb = new StringBuilder(word);
+                    sb.replace(0, word.length() - 1, key.getValue());
+                    tmp.set(tmp.indexOf(word), new String(sb));
+                } else {
+                    index--;
+                    if (index * - 1 == tmp.size()) {
+                        throw new IllegalArgumentException("В карте присутствует лишний ключ.");
+                    }
                 }
             }
         }

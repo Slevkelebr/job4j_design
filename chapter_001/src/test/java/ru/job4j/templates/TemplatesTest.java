@@ -2,6 +2,7 @@ package ru.job4j.templates;
 
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
@@ -26,6 +27,30 @@ public class TemplatesTest {
         Templates templates = new SimpleGenerator();
         String text = "Help, ${sos}, ${sos}, ${sos}!";
         Map<String, String> data = Map.of("sos","Aaa");
+        String expected = "Help, Aaa, Aaa, Aaa!";
+
+        String result = templates.generate(text, data);
+
+        assertThat(result, is(expected));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenMapIsEmpty() {
+        Templates templates = new SimpleGenerator();
+        String text = "Help, ${sos}, ${sos}, ${sos}!";
+        Map<String, String> data = new HashMap<>();
+        String expected = "Help, Aaa, Aaa, Aaa!";
+
+        String result = templates.generate(text, data);
+
+        assertThat(result, is(expected));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenMapHaveExcessKey() {
+        Templates templates = new SimpleGenerator();
+        String text = "Help, ${sos}, ${sos}, ${sos}!";
+        Map<String, String> data = Map.of("sos","Aaa", "name","Petr");
         String expected = "Help, Aaa, Aaa, Aaa!";
 
         String result = templates.generate(text, data);
