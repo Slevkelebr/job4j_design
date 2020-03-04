@@ -20,7 +20,7 @@ public class SimpleGenerator implements Templates {
                     tmp.set(tmp.indexOf(word), new String(sb));
                 } else {
                     index--;
-                    if (index * - 1 == tmp.size()) {
+                    if (index * -1 == tmp.size()) {
                         throw new IllegalArgumentException("В карте присутствует лишний ключ.");
                     }
                 }
