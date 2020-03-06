@@ -1,53 +1,92 @@
 package ru.job4j.srp;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 import org.junit.Test;
 
-import java.util.Arrays;
-
-import static org.hamcrest.core.Is.is;
+import java.util.Calendar;
 
 
 public class ReportEngineTest {
 
     @Test
+    public void whenOldGenerated() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employer worker = new Employer("Ivan", now, now, 100);
+        store.add(worker);
+        ReportEngine engine = new ReportEngine(store);
+        StringBuilder expect = new StringBuilder()
+                .append("Name; Hired; Fired; Salary;")
+                .append(System.lineSeparator())
+                .append(worker.getName()).append(";")
+                .append(worker.getHired().getTime()).append(";")
+                .append(worker.getFired().getTime()).append(";")
+                .append(worker.getSalary()).append(";")
+                .append(System.lineSeparator());
+        assertThat(engine.generate(em -> true), is(expect.toString()));
+    }
+
+    @Test
     public void whenDisplayEmployeesDescOrderSalaryAndRemoveFieldsHiredAndFired() {
-        Store store = null;
-        ReportEngine report = new ReportEngine(null);
-
-        String result =  report.generate(employer -> true);
-
-        String expected = "Name; Salary;\nSergey; 100000.0;\nName; Salary;\n Ivan; 80000.0;";
-
-        Assert.assertThat(result, is(expected));
-        }
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employer worker = new Employer("Puckan", now, now, 80);
+        Employer worker1 = new Employer("Gorit", now, now, 100);
+        store.add(worker);
+        store.add(worker1);
+        ReportEngine engine = new ReportEngine(store);
+        StringBuilder expect = new StringBuilder()
+                .append("Name; Salary;")
+                .append(System.lineSeparator())
+                .append(worker1.getName()).append(";")
+                .append(worker1.getSalary()).append(";")
+                .append(System.lineSeparator())
+                .append("Name; Salary;")
+                .append(System.lineSeparator())
+                .append(worker.getName()).append(";")
+                .append(worker.getSalary()).append(";")
+                .append(System.lineSeparator());
+        assertThat(engine.reportForHR(em -> true), is(expect.toString()));
+    }
 
     @Test
     public void whenDisplayEmployeesChangeViewSalary() {
-        Store store = null;
-        ReportEngine report = new ReportEngine(null);
-
-        String result =  report.generate(employer -> true);
-
-        String expected = "Name; Hired; Fired; Salary;\nSergey; 20.02.2017; 20.02.2020; 100 тыс;";
-
-        Assert.assertThat(result, is(expected));
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employer worker = new Employer("Ivan", now, now, 100);
+        store.add(worker);
+        ReportEngine engine = new ReportEngine(store);
+        StringBuilder expect = new StringBuilder()
+                .append("Name; Hired; Fired; Salary;")
+                .append(System.lineSeparator())
+                .append(worker.getName()).append(";")
+                .append(worker.getHired().getTime()).append(";")
+                .append(worker.getFired().getTime()).append(";")
+                .append(worker.getSalary()).append(" тыс").append(";")
+                .append(System.lineSeparator());
+        assertThat(engine.reportForAccounting(em -> true), is(expect.toString()));
     }
 
     @Test
     public void whenDisplayEmployeesForProgrammers() {
-        Store store = null;
-        ReportEngine report = new ReportEngine(null);
-
-        String result =  report.generate(employer -> true);
-
-        String[][] expected = new String[][]{
-                {"Name; Hired; Fired; Salary;"},
-                {"Sergey;", "20.02.2017", " 20.02.2020", "100000.0;"}
-        };
-
-        Assert.assertThat(result, is(expected));
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employer worker = new Employer("Puckan", now, now, 80);
+        store.add(worker);
+        ReportEngine engine = new ReportEngine(store);
+        StringBuilder expect = new StringBuilder()
+                .append("{TITTLE} Name; Hired; Fired; Salary; {/TITTLE}")
+                .append(System.lineSeparator())
+                .append("{TEXT} ").append(worker.getName()).append(";")
+                .append(worker.getHired().getTime()).append(";")
+                .append(worker.getFired().getTime()).append(";")
+                .append(worker.getSalary()).append(";").append(" {/TEXT}")
+                .append(System.lineSeparator());
+        assertThat(engine.reportForProgrammers(em -> true), is(expect.toString()));
     }
+
 }
 
 
