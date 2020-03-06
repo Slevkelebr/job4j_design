@@ -87,6 +87,24 @@ public class ReportEngineTest {
         assertThat(engine.reportForProgrammers(em -> true), is(expect.toString()));
     }
 
+    @Test
+    public void whenDisplayEmployeesForProgrammersJson() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employer worker = new Employer("Puckan", now, now, 80);
+        store.add(worker);
+        ReportEngine engine = new ReportForIT(store);
+        StringBuilder expect = new StringBuilder()
+                .append("{JSON_TITTLE} Name; Hired; Fired; Salary; {/JSON_TITTLE}")
+                .append(System.lineSeparator())
+                .append("{JSON_TEXT} ").append(worker.getName()).append(";")
+                .append(worker.getHired().getTime()).append(";")
+                .append(worker.getFired().getTime()).append(";")
+                .append(worker.getSalary()).append(";").append(" {/JSON_TEXT}")
+                .append(System.lineSeparator());
+        assertThat(engine.reportForProgrammers(em -> true), is(expect.toString()));
+    }
+
 }
 
 
