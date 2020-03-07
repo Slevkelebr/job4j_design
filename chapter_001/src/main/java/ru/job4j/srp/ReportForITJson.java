@@ -1,16 +1,14 @@
 package ru.job4j.srp;
 
+import java.util.List;
 import java.util.function.Predicate;
 
-public class ReportForIT extends ReportEngine {
-    public ReportForIT(Store store) {
-        super(store);
-    }
+public class ReportForITJson implements Report {
 
     @Override
-    public String reportForProgrammers(Predicate<Employer> filter) {
+    public String row(List<Employer> em) {
         StringBuilder text = new StringBuilder();
-        for (Employer employer : store.findBy(filter)) {
+        for (Employer employer : em) {
             text.append("{JSON_TITTLE} ").append("Name; Hired; Fired; Salary;").append(" {/JSON_TITTLE}")
                     .append(System.lineSeparator())
                     .append("{JSON_TEXT} ").append(employer.getName()).append(";")

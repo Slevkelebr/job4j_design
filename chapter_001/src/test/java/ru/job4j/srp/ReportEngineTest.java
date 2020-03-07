@@ -76,6 +76,7 @@ public class ReportEngineTest {
         Employer worker = new Employer("Puckan", now, now, 80);
         store.add(worker);
         ReportEngine engine = new ReportEngine(store);
+        Report report = new ReportForITHtml();
         StringBuilder expect = new StringBuilder()
                 .append("{TITTLE} Name; Hired; Fired; Salary; {/TITTLE}")
                 .append(System.lineSeparator())
@@ -84,7 +85,7 @@ public class ReportEngineTest {
                 .append(worker.getFired().getTime()).append(";")
                 .append(worker.getSalary()).append(";").append(" {/TEXT}")
                 .append(System.lineSeparator());
-        assertThat(engine.reportForProgrammers(em -> true), is(expect.toString()));
+        assertThat(engine.reportForProgrammers(report, em -> true), is(expect.toString()));
     }
 
     @Test
@@ -93,7 +94,8 @@ public class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employer worker = new Employer("Puckan", now, now, 80);
         store.add(worker);
-        ReportEngine engine = new ReportForIT(store);
+        ReportEngine engine = new ReportEngine(store);
+        Report report = new ReportForITJson();
         StringBuilder expect = new StringBuilder()
                 .append("{JSON_TITTLE} Name; Hired; Fired; Salary; {/JSON_TITTLE}")
                 .append(System.lineSeparator())
@@ -102,7 +104,7 @@ public class ReportEngineTest {
                 .append(worker.getFired().getTime()).append(";")
                 .append(worker.getSalary()).append(";").append(" {/JSON_TEXT}")
                 .append(System.lineSeparator());
-        assertThat(engine.reportForProgrammers(em -> true), is(expect.toString()));
+        assertThat(engine.reportForProgrammers(report, em -> true), is(expect.toString()));
     }
 
 }

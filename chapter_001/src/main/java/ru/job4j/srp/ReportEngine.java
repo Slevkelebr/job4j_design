@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class ReportEngine {
-    protected Store store;
+    private Store store;
 
     public ReportEngine(Store store) {
         this.store = store;
@@ -38,18 +38,8 @@ public class ReportEngine {
         return text.toString();
     }
 
-    public String reportForProgrammers(Predicate<Employer> filter) {
-        StringBuilder text = new StringBuilder();
-        for (Employer employer : store.findBy(filter)) {
-            text.append("{TITTLE} ").append("Name; Hired; Fired; Salary;").append(" {/TITTLE}")
-                    .append(System.lineSeparator())
-                    .append("{TEXT} ").append(employer.getName()).append(";")
-                    .append(employer.getHired().getTime()).append(";")
-                    .append(employer.getFired().getTime()).append(";")
-                    .append(employer.getSalary()).append(";").append(" {/TEXT}")
-                    .append(System.lineSeparator());
-        }
-        return text.toString();
+    public String reportForProgrammers(Report report, Predicate<Employer> filter) {
+        return report.row(store.findBy(filter));
     }
 
     public String reportForAccounting(Predicate<Employer> filter) {
