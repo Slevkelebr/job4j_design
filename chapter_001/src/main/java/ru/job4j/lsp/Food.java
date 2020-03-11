@@ -30,7 +30,7 @@ public class Food {
         return expaireDate;
     }
 
-     double getPrice() {
+    double getPrice() {
         return price;
     }
 
@@ -38,10 +38,10 @@ public class Food {
         return disscount;
     }
 
-     double setDisscont() {
+    void setDisscont() {
         System.out.println("Установлена скидка в размере " + disscount * 100 + "%");
         double diss = price * disscount;
-        return this.price = price - diss;
+        this.price = price - diss;
     }
 
      int expirationDateInDay() {
