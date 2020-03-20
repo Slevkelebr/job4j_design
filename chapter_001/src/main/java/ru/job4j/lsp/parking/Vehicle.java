@@ -23,16 +23,9 @@ public interface Vehicle {
      */
     void setSize(int size);
 
-    /**
-     * Получить ид талона.
-     * @return ид.
-     */
     double getIdTicket();
 
-    /**
-     * Установить id талона.
-     * @param idTicket id.
-     */
+
     void setIdTicket(double idTicket);
 
 }

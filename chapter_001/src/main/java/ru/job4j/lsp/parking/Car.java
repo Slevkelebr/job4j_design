@@ -1,13 +1,13 @@
 package ru.job4j.lsp.parking;
 
 /**
- * class AbstractCar - абстрактый класс для модели авто.
+ * class Car - класс модели авто.
  *
  * @author Sergey Frolov (slevkelebr@yandex.ru)
  * @version 0.2
  * @since 11.03.2020
  */
-public abstract class AbstractCar implements Vehicle {
+public class Car implements Vehicle {
 
     /**
      * размер траспортного средства.
@@ -15,10 +15,6 @@ public abstract class AbstractCar implements Vehicle {
     private int size;
 
     private double idTicket;
-
-    public AbstractCar() {
-    }
-
 
     @Override
     public int getSize() {
