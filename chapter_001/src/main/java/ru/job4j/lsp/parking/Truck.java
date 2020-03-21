@@ -7,24 +7,37 @@ package ru.job4j.lsp.parking;
  * @version 0.2
  * @since 11.03.2020
  */
-public class Truck extends CarDecorator {
+public class Truck implements CarDecorator {
+
+    private Vehicle vehicle;
 
     Truck(Vehicle vehicle) {
-        super(vehicle);
-        setSize(1);
+        setVehicle(vehicle);
+        setSize(2);
+    }
+
+    @Override
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     @Override
     public int getSize() {
-        return super.getSize();
+        return vehicle.getSize();
     }
 
     @Override
     public void setSize(int size) {
-        super.setSize(sizeTruck(size));
+        vehicle.setSize(size);
     }
 
-    private int sizeTruck(int size) {
-        return size * 2;
+    @Override
+    public double getIdTicket() {
+        return vehicle.getIdTicket();
+    }
+
+    @Override
+    public void setIdTicket(double idTicket) {
+        vehicle.setIdTicket(idTicket);
     }
 }
