@@ -44,4 +44,16 @@ public class ControlQualityTest {
         assertEquals(lifeCycle.get(2).getListFood().get(0).getName(), expected.getName());
     }
 
+    @Test
+    public void resort() {
+        List<LifeCycleFood> lifeCycle = Arrays.asList(new Warehouse(), new Shop(), new Trash());        ArrayList<Food> listFood = new ArrayList<>(List.of(
+                new Milk("Milk", new GregorianCalendar(2020, Calendar.MARCH, 10), new GregorianCalendar(2020, Calendar.MARCH, 16), 50, 0.2),
+                new Milk("Milk", new GregorianCalendar(2020, Calendar.MARCH, 8), new GregorianCalendar(2020, Calendar.MARCH, 15), 50, 0.2)));
+        ControlQuality control = new ControlQuality(lifeCycle, new GregorianCalendar(2020, Calendar.MARCH, 14));
+        control.moving(listFood);
+        Food expected =  new Milk("Milk", new GregorianCalendar(2020, Calendar.MARCH, 10), new GregorianCalendar(2020, Calendar.MARCH, 16), 50, 0.2);
+        control.resort();
+        assertEquals(lifeCycle.get(1).getListFood().get(0).getName(), expected.getName());
+    }
+
 }

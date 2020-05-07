@@ -30,4 +30,12 @@ public class ControlQuality {
             }
         }
     }
+
+    void resort() {
+        ArrayList<Food> tmp = new ArrayList<>();
+        for (var life : cycleFood) {
+            tmp.addAll(life.getListFood());
+        }
+        moving(tmp);
+    }
 }
