@@ -14,11 +14,11 @@ public class ControlQuality {
         this.dateNow = dateNow;
     }
 
-    public void setCycleFood(ArrayList<LifeCycleFood> cycleFood) {
+    public void setCycleFood(List<LifeCycleFood> cycleFood) {
         this.cycleFood = cycleFood;
     }
 
-     void moving(ArrayList<Food> listFood) {
+     void moving(List<Food> listFood) {
         for (var food : listFood) {
             for (var life : cycleFood) {
                 if (life.setFood(food, dateNow)) {
@@ -32,9 +32,10 @@ public class ControlQuality {
     }
 
     void resort() {
-        ArrayList<Food> tmp = new ArrayList<>();
+        List<Food> tmp = new ArrayList<>();
         for (var life : cycleFood) {
             tmp.addAll(life.getListFood());
+            life.getListFood().clear();
         }
         moving(tmp);
     }
