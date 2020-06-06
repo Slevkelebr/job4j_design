@@ -29,11 +29,11 @@ public class Game {
      * Размер структуры.
      * 8 - для игры 3х3, 12 для игры 5х5.
      */
-    private int size = 12;
+    private int size = 8;
     /**
      * Структура NxN для игры.
      */
-    private String[][] table = new StructureNxN(size).getStr();
+    private String[][] table = new StructureNxN(size).loadingStructure();
     /**
      * Логика игры.
      */
@@ -57,13 +57,6 @@ public class Game {
         this.player2 = player2;
     }
 
-    /**
-     * Установка размера структуры.
-     * 8 - для игры 3х3, 12 для игры 5х5.
-     */
-    public void setSize(int size) {
-        this.size = size;
-    }
 
     /**
      * Метод start управляет игрой.

@@ -9,7 +9,7 @@ package ru.job4j.tictactoo;
  */
 public interface FillStructure {
 
-    String[][] getStr();
+    String[][] loadingStructure();
 
     void structure();
 }

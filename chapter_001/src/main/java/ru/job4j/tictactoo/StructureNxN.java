@@ -15,7 +15,8 @@ public class StructureNxN implements FillStructure {
         this.str = new String[size][size];
     }
 
-    public String[][] getStr() {
+    @Override
+    public String[][] loadingStructure() {
         structure();
         return str;
     }
