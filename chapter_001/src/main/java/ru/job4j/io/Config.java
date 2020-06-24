@@ -20,9 +20,10 @@ public class Config {
             read.lines()
                     .filter(i -> !(i.isEmpty() || i.startsWith("#")))
                     .forEach(i -> {
-                        String[] split = i.split("=");
-                        this.values.put(split[0], split[1]);
-                    });
+                        if (i.contains("=")) {
+                            String[] split = i.split("=");
+                            this.values.put(split[0], split[1]);
+                        }});
         } catch (Exception e) {
             e.printStackTrace();
         }
