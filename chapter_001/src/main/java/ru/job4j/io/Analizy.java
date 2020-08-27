@@ -2,6 +2,7 @@ package ru.job4j.io;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,27 +17,21 @@ public class Analizy {
         try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             String serverNotAvailable = null;
             List<String> list = new ArrayList<>();
+            String tmp = null;
             while (in.ready()) {
                 String string = in.readLine();
                 if (serverNotAvailable == null && (string.startsWith("400") || string.startsWith("500"))) {
-                    list.add(string.substring(4) + ";");
+                    tmp = string.substring(4) + ";";
                     serverNotAvailable = string;
                 } else if (serverNotAvailable != null && (!string.startsWith("400") && (!string.startsWith("500")))) {
-                    list.add(string.substring(4));
+                    list.add(tmp + string.substring(4));
                     serverNotAvailable = null;
                 }
             }
             PrintWriter out = new PrintWriter(new FileOutputStream(target));
-            int strIndex = 0;
             for (var str :
                  list) {
-                if (strIndex == 0) {
-                    out.print(str);
-                    strIndex++;
-                } else if (strIndex == 1) {
-                    out.println(str);
-                    strIndex = 0;
-                }
+                out.println(str);
             }
             out.close();
         } catch (IOException e) {
