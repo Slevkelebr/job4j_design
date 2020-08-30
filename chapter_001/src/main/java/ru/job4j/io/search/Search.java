@@ -13,7 +13,7 @@ public class Search {
     }
 
     public static List<Path> search(Path root, String ext) throws IOException {
-        MyFileVisitor searcher = new MyFileVisitor();
+        MyFileVisitor searcher = new MyFileVisitor(p -> p.toFile().getName().endsWith(ext));
         Files.walkFileTree(root, searcher);
         return searcher.result();
 
