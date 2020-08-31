@@ -19,7 +19,7 @@ public class MyFileVisitor extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-        if (predicate.test(file)) {
+        if (!predicate.test(file)) {
            result.add(file.toAbsolutePath());
         }
         return FileVisitResult.CONTINUE;
