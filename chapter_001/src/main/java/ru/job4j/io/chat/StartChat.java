@@ -24,14 +24,21 @@ public class StartChat {
      * Режим работы чата.
      */
     private boolean chatState = true;
-    
+    /**
+     * Список возомжных ответов в чат.
+     */
+    private List<String> text;
+
+    public StartChat(List<String> text) {
+        this.text = text;
+    }
 
     /**
      * Цикл чата, прохоид опрос пользователя и получение ответа из списка.
      * @param user ответ от пользователя.
-     * @param text список возможных ответов.
+     * @param logger запись диалога в txt файл.
      */
-    private void chatLoop(User user, Read text, Logger logger) {
+    private void chatLoop(User user, Logger logger) {
         System.out.println("Вы запустили консольный чат.");
         System.out.println("Что бы остановить чат введите - " + STOP);
         System.out.println("Что бы продолжить чат введите - " + CONTINUE);
@@ -40,7 +47,7 @@ public class StartChat {
         do {
             String answerUser = user.answer();
             statusCheck(answerUser);
-            String answerChat = randomAnswer(text.readFile());
+            String answerChat = randomAnswer();
             if (!answerChat.equals("")) {
                 System.out.println(answerChat);
             }
@@ -70,23 +77,22 @@ public class StartChat {
 
     /**
      * Рандомный ответ для пользователя из списка.
-     * @param text список готовых ответов.
      */
-    private String randomAnswer (List<String> text) {
+    private String randomAnswer () {
         String result = "";
         if (this.chatState && this.stateResponse == 0) {
-            int index = (int) (Math.random() * (text.size() - 1));
-            result = text.get(index);
+            int index = (int) (Math.random() * (this.text.size() - 1));
+            result = this.text.get(index);
         }
         return result;
     }
 
     public static void main(String[] args) {
-        StartChat chat = new StartChat();
         UserAnswer userAnswer = new UserAnswer();
         LoggerChat logger = new LoggerChat("c:\\projects\\job4j_design\\chapter_001\\log.txt");
         ReadTxt txt = new ReadTxt((Objects.requireNonNull(ReadTxt.class.getClassLoader().getResource("text.txt"))).getFile());
-        chat.chatLoop(userAnswer, txt, logger);
+        StartChat chat = new StartChat(txt.readFile());
+        chat.chatLoop(userAnswer, logger);
     }
 
 }
