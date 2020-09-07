@@ -35,10 +35,11 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public void remove(int index) {
         Objects.checkIndex(index, amountElements);
-        Object[] newContainer = new Object[--amountElements];
+        Object[] newContainer = new Object[amountElements--];
         System.arraycopy(container, 0, newContainer, 0, index);
         System.arraycopy(container, index + 1, newContainer, index, amountElements - 1);
         container = newContainer;
+
     }
 
     public T get(int index) {
