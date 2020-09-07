@@ -1,5 +1,6 @@
 package ru.job4j.generic;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
 
-    private final Object[] container;
+    private Object[] container;
     private int amountElements = 0;
 
 
@@ -28,18 +29,16 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void set(int index, T model) {
-        Objects.checkIndex(index, container.length);
+        Objects.checkIndex(index, amountElements);
         container[index] = model;
     }
 
     public void remove(int index) {
         Objects.checkIndex(index, amountElements);
-        int position = index;
-        for ( ; position < amountElements - 1; position++) {
-                container[position] = container[position + 1];
-        }
-        amountElements--;
-        container[position] = null;
+        Object[] newContainer = new Object[--amountElements];
+        System.arraycopy(container, 0, newContainer, 0, index);
+        System.arraycopy(container, index + 1, newContainer, index, amountElements - 1);
+        container = newContainer;
     }
 
     public T get(int index) {

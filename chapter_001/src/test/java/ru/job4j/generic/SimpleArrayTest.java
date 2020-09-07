@@ -32,6 +32,7 @@ public class SimpleArrayTest {
         array.add(3);
         array.add(4);
         array.remove(1);
+        assertThat(2, is(array.get(0)));
         assertThat(4, is(array.get(1)));
     }
 
