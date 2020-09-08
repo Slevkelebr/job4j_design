@@ -1,4 +1,4 @@
-package ru.job4j.io.search.arсhive;
+package ru.job4j.io.search;
 
 import java.nio.file.Paths;
 

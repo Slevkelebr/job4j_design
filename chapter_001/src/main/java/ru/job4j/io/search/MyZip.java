@@ -1,6 +1,4 @@
-package ru.job4j.io.search.arсhive;
-
-import ru.job4j.io.search.Search;
+package ru.job4j.io.search;
 
 import java.io.IOException;
 import java.nio.file.Path;

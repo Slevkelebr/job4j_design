@@ -1,4 +1,4 @@
-package ru.job4j.io.search.arсhive;
+package ru.job4j.io.search;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -17,8 +17,7 @@ public class Zip {
 
     public void packFiles(List<Path> sources, Path target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target.toString())))) {
-            for (var path:
-                    sources) {
+            for (var path : sources) {
                 zip.putNextEntry(new ZipEntry(path.toString()));
                 try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(path.toString()))) {
                     zip.write(out.readAllBytes());

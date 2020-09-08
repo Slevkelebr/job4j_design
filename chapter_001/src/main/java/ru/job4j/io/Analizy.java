@@ -28,8 +28,7 @@ public class Analizy {
                 }
             }
             PrintWriter out = new PrintWriter(new FileOutputStream(target));
-            for (var str :
-                 list) {
+            for (var str : list) {
                 out.println(str);
             }
             out.close();

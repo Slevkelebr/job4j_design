@@ -60,7 +60,7 @@ public class StartChat {
      * Проверка режима чата и изменения его активности.
      * @param answer сообщение от пользователя.
      */
-    private void statusCheck (String answer) {
+    private void statusCheck(String answer) {
         if (STOP.equals(answer)) {
             this.stateResponse = 1;
             this.chatState =  true;
@@ -78,7 +78,7 @@ public class StartChat {
     /**
      * Рандомный ответ для пользователя из списка.
      */
-    private String randomAnswer () {
+    private String randomAnswer() {
         String result = "";
         if (this.chatState && this.stateResponse == 0) {
             int index = (int) (Math.random() * (this.text.size() - 1));
