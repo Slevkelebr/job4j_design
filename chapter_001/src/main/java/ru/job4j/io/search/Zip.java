@@ -28,18 +28,4 @@ public class Zip {
         }
         System.out.println("Архивация прошла успешно.");
     }
-
-/*    private void packSingleFile(Path target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target.toString())))) {
-            for (var path:
-                    paths) {
-                zip.putNextEntry(new ZipEntry(path.toString()));
-                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(path.toString()))) {
-                    zip.write(out.readAllBytes());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 }
