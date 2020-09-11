@@ -22,6 +22,9 @@ public class Args {
      */
     public boolean valid() throws NotValidDataException {
         boolean result = true;
+        if (args.length < 7) {
+            throw new  NotValidDataException();
+        }
         if (!Paths.get(directory()).isAbsolute()) {
             result = false;
             System.out.println("Directory " + directory() + " is not correct");
@@ -45,18 +48,18 @@ public class Args {
     }
 
     public String directory() {
-        return args.length > 2 ? args[1] : "false";
+        return args[1];
     }
 
     public String exclude() {
-        return args.length > 4 ? args[3] : "false";
+        return args[3];
     }
 
     public String mode() {
-        return args.length > 5 ? args[4] : "false";
+        return args[4];
     }
 
     public String output() {
-        return args.length > 6 ? args[6] : "false";
+        return args[6];
     }
 }
