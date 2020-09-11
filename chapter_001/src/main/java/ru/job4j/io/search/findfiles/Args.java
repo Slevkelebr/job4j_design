@@ -20,7 +20,7 @@ public class Args {
      * В методе проверяем валидность данных.
      * @return true если все данные валидны иначе false.
      */
-    public boolean valid() {
+    public boolean valid() throws NotValidDataException {
         boolean result = true;
         if (!Paths.get(directory()).isAbsolute()) {
             result = false;
@@ -37,6 +37,9 @@ public class Args {
         if (!output().matches("(.*)\\.txt(.*)")) {
             result = false;
             System.out.println("Incorrect file extension specified " + output());
+        }
+        if (!result) {
+            throw  new NotValidDataException();
         }
         return result;
     }

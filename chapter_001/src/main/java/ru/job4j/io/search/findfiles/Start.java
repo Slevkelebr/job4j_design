@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Start {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, NotValidDataException {
         Args arg = new Args(args);
         DataRecording zip = new DataRecording();
         if (arg.valid()) {

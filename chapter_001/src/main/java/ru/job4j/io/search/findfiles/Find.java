@@ -19,7 +19,8 @@ public class Find {
         if (mode.contains("m")) {
             find = new FindFileVisitor(p -> p.toFile().getName().endsWith(ext));
         } else if (mode.contains("f")) {
-            find = new FindFileVisitor(p -> p.getFileName().toString().startsWith(ext));
+            String tmp = ext + ".";
+            find = new FindFileVisitor(p -> p.getFileName().toString().startsWith(tmp));
         } else if (mode.contains("r")) {
             find = new FindFileVisitor(p -> p.getFileName().toString().matches(ext));
         }
