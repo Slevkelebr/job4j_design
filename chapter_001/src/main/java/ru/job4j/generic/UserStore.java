@@ -1,27 +1,34 @@
 package ru.job4j.generic;
 
-public class UserStore<T extends Base> implements Store<T> {
+/**
+ * Реализация универсального хранилища для пользователя. Используем компазицию.
+ * @author Frolov Sergey (Slevkelebr@yandex.ru)
+ * @version 0.1
+ * @since 12.09.2020
+ */
 
-    private final Store<T> store = new MemStore<T>();
+
+public class UserStore implements Store<User> {
+
+    private final Store<User> store = new MemStore<User>();
 
     @Override
-    public void add(T model) {
+    public void add(User model) {
         store.add(model);
     }
 
     @Override
-    public boolean replace(String id, T model) {
-
-        return false;
+    public boolean replace(String id, User model) {
+        return store.replace(id, model);
     }
 
     @Override
     public boolean delete(String id) {
-        return false;
+        return store.delete(id);
     }
 
     @Override
-    public T findById(String id) {
-        return null;
+    public User findById(String id) {
+        return store.findById(id);
     }
 }
