@@ -28,7 +28,7 @@ public final class MemStore<T extends Base> implements Store<T> {
         if (element == null) {
             return false;
         }
-        mem.set(mem.indexOf(element), model);
+        mem.set(findByIdToIndex(id), model);
         return true;
     }
 
@@ -38,7 +38,8 @@ public final class MemStore<T extends Base> implements Store<T> {
         if (element == null) {
             return false;
         }
-        return  mem.remove(element);
+        mem.remove(findByIdToIndex(id));
+        return true;
     }
 
     @Override
@@ -49,5 +50,14 @@ public final class MemStore<T extends Base> implements Store<T> {
             }
         }
         return null;
+    }
+
+    private int findByIdToIndex(String id) {
+        for (int index = 0; index < mem.size(); index++) {
+            if (mem.get(index).getId().equals(id)) {
+                return index;
+            }
+        }
+        return -1;
     }
 }
