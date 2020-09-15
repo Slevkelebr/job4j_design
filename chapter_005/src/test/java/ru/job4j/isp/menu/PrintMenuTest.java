@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ru.job4j.isp.menu.Item;
+import ru.job4j.isp.menu.PrintMenu;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

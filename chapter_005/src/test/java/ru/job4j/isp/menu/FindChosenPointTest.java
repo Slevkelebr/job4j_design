@@ -3,6 +3,8 @@ package ru.job4j.isp.menu;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ru.job4j.isp.menu.FindChosenPoint;
+import ru.job4j.isp.menu.Item;
 
 public class FindChosenPointTest {
 

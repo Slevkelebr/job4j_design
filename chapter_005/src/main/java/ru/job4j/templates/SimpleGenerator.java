@@ -1,6 +1,9 @@
 package ru.job4j.templates;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.StringJoiner;
 
 public class SimpleGenerator implements Templates {
 

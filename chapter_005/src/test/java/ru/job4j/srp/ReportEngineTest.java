@@ -1,11 +1,11 @@
 package ru.job4j.srp;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.is;
-
 import org.junit.Test;
 
 import java.util.Calendar;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 
 public class ReportEngineTest {
