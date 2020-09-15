@@ -1,5 +1,7 @@
 package ru.job4j.collection;
 
+import org.w3c.dom.Node;
+
 import java.util.*;
 
 /**
@@ -24,9 +26,13 @@ public class SimpleArrayNew<T> implements Iterable<T> {
     public void add(T model) {
         modCount++;
         if (countElements == container.length) {
-           container = Arrays.copyOf(container, countElements + (countElements / 2) + 1);
+           container = grow();
         }
         container[countElements++] = model;
+    }
+
+    private Object[] grow() {
+        return Arrays.copyOf(container, countElements + (countElements / 2) + 1);
     }
 
     @Override
