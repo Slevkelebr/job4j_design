@@ -33,6 +33,28 @@ public class SimpleList<T> implements Iterable<T> {
         countElements++;
     }
 
+    public void addFirst(T value) {
+        if (head == null) {
+            head = new Node<T>(value, null);
+        } else {
+            head = new Node<T>(value, head);
+        }
+        countElements++;
+        modCount++;
+    }
+
+    public T deleteFirst() {
+        Node<T> first = head;
+        if (first != null) {
+            head = first.next;
+        } else {
+            throw new NoSuchElementException();
+        }
+        countElements--;
+        modCount++;
+        return first.value;
+    }
+
     public T get(int index) {
         Objects.checkIndex(index, countElements);
         int position = 0;
