@@ -8,8 +8,8 @@ import java.util.Objects;
 /**
  * Класс описывает динамический контейнер на базе связанного списка.
  * @author Frolov Sergey (Slevkelebr@yandex.ru)
- * @version 0.1
- * @since 16.09.2020
+ * @version 0.2
+ * @since 17.09.2020
  */
 
 public class SimpleList<T> implements Iterable<T> {
@@ -44,12 +44,12 @@ public class SimpleList<T> implements Iterable<T> {
             position++;
             element = element.next;
         }
-        return element.next.value;
+        return element.value;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
             private Node<T> current = head;
             int expectedModCount = modCount;
 
@@ -58,7 +58,7 @@ public class SimpleList<T> implements Iterable<T> {
                 if (modCount != expectedModCount) {
                     throw new ConcurrentModificationException();
                 }
-                return current != null;
+                return current != null && current.next != null;
             }
 
             @Override
