@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Класс описывает динамический контейнер на базе связанного списка.
  * @author Frolov Sergey (Slevkelebr@yandex.ru)
- * @version 0.2
+ * @version 0.3
  * @since 17.09.2020
  */
 
@@ -67,6 +67,9 @@ public class SimpleList<T> implements Iterable<T> {
             element = element.next;
         }
         return element.value;
+    }
+    public int getCountElements() {
+        return countElements;
     }
 
     @Override
