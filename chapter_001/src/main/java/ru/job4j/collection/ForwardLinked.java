@@ -6,15 +6,15 @@ import java.util.NoSuchElementException;
 /**
  * Класс описывает контейнер для ссылочных типов данных.
  * @author Frolov Sergey (Slevkelebr@yandex.ru)
- * @version 0.1
- * @since 15.09.2020
+ * @version 0.2
+ * @since 17.09.2020
  */
 
 public class ForwardLinked<T> implements Iterable<T> {
     private Node<T> head;
 
     public void add(T value) {
-        Node<T> node = new Node<T>(value, null);
+        Node<T> node = new Node<>(value, null);
         if (head == null) {
             head = node;
             return;
@@ -24,6 +24,21 @@ public class ForwardLinked<T> implements Iterable<T> {
             tail = tail.next;
         }
         tail.next = node;
+    }
+
+    /**
+     * Разворачивает связанный список.
+     */
+    public void revert() {
+        Node<T> tail = head;
+        Node<T> reversedPath = null;
+        while (tail != null) {
+            Node<T> next = tail.next;
+            tail.next = reversedPath;
+            reversedPath = tail;
+            tail = next;
+        }
+        head = reversedPath;
     }
 
     public void deleteFirst() {
