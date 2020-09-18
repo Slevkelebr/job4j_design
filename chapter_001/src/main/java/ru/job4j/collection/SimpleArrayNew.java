@@ -5,8 +5,8 @@ import java.util.*;
 /**
  * Класс реализует динамический список на базе массива.
  * @author Frolov Sergey (Slevkelebr@yandex.ru)
- * @version 0.1
- * @since 15.09.2020
+ * @version 0.2
+ * @since 18.09.2020
  */
 
 public class SimpleArrayNew<T> implements Iterable<T> {
@@ -27,6 +27,17 @@ public class SimpleArrayNew<T> implements Iterable<T> {
            container = grow();
         }
         container[countElements++] = model;
+    }
+
+    public boolean get(T model) {
+        boolean result = false;
+        for (int i = 0; i < countElements; i++) {
+            if (container[i].equals(model)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     private Object[] grow() {
