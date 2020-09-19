@@ -13,7 +13,7 @@ public class SimpleSet<E> {
     private SimpleArrayNew<E> array = new SimpleArrayNew<E>();
 
     public void add(E e) {
-        if (!array.get(e)) {
+        if (!array.contains(e)) {
             array.add(e);
         }
     }

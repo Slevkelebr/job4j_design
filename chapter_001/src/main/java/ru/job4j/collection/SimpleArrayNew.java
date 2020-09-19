@@ -29,10 +29,10 @@ public class SimpleArrayNew<T> implements Iterable<T> {
         container[countElements++] = model;
     }
 
-    public boolean get(T model) {
+    public boolean contains(T model) {
         boolean result = false;
         for (int i = 0; i < countElements; i++) {
-            if (container[i].equals(model)) {
+            if (Objects.equals(container[i], model)) {
                 result = true;
                 break;
             }
