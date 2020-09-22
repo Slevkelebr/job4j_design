@@ -1,16 +1,20 @@
 package ru.job4j.collection.map;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * Реализация структуры HashMap.
  *
  * @author Frolov Sergey (Slevkelebr@yandex.ru)
- * @version 0.1
- * @since 21.09.2020
+ * @version 0.2
+ * @since 22.09.2020
  */
 
-public class MyHashMap<K, V> {
+public class MyHashMap<K, V> implements Iterable<K>{
 
-    private static final int CAPACITY = 13;
+    private static final int CAPACITY = 7;
 
     static class Node<K, V> {
         final int hash;
@@ -23,7 +27,6 @@ public class MyHashMap<K, V> {
             this.value = value;
         }
     }
-
     /*
         Массив ячеек хэш-таблицы.
      */
@@ -32,15 +35,36 @@ public class MyHashMap<K, V> {
         Текущий размер хэш-таблицы.
      */
     private int arraySize;
+
+    /*
+        Количество элементов в хэш-таблице.
+     */
+    private int size;
+
+    private int modCount;
     /*
        Порог заполнения хэш-таблицы, после которого её размер увеличивается.
      */
     private float threshold;
 
     private void resize() {
-        hashArray = (Node<K,V>[])new Node[CAPACITY];
-        arraySize = hashArray.length;
-        threshold = arraySize * 0.75f;
+        Node<K,V>[] oldTab = hashArray;
+        int capacity = CAPACITY;
+        if (arraySize > 0 && size >= threshold) {
+            hashArray = (Node<K,V>[])new Node[capacity << 1];//удваиваем capacity
+            this.size = 0;
+            arraySize = hashArray.length;
+            threshold = arraySize * 0.75f;
+            for (var el : oldTab) {
+                if (el != null) {
+                    insert(el.key, el.value);
+                }
+            }
+        } else {
+            hashArray = (Node<K, V>[]) new Node[capacity];
+            arraySize = hashArray.length;
+            threshold = arraySize * 0.75f;
+        }
     }
 
     /**
@@ -72,6 +96,10 @@ public class MyHashMap<K, V> {
             return false;
         }
         this.hashArray[kHash] = p;
+        if (++size > threshold) {
+            resize();
+        }
+        modCount++;
         return true;
     }
 
@@ -109,9 +137,50 @@ public class MyHashMap<K, V> {
         if (element != null) {
             if (element.hash == key.hashCode() && element.key.equals(key)) {
                 hashArray[hash] = null;
+                this.size--;
+                this.modCount++;
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public Iterator<K> iterator() {
+        return new Iterator<>() {
+            private int position = 0;
+            private int extModCount = modCount;
+
+            /**
+             * Проверяет если следующий элемент или нет.
+             *
+             * @return true если есть элемент.
+             */
+            public boolean hasNext() {
+                boolean result = false;
+                if (extModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                for (int i = position; i < hashArray.length; i++) {
+                    if (hashArray[i] != null) {
+                        result = true;
+                        break;
+                    }
+                }
+                return result;
+            }
+
+            /**
+             * Возвращает следующий элемент из массива.
+             *
+             * @return следующий элемент.
+             */
+            public K next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return (K) hashArray[position++];
+            }
+        };
     }
 }
