@@ -18,6 +18,8 @@ public class MyHashMapTest {
         assertTrue(map.insert(user2, "Ghb"));
         System.out.println(map.get(user1));
         System.out.println(map.get(user2));
+        assertTrue(map.delete(user2));
+        System.out.println(map.get(user2));
 
     }
 

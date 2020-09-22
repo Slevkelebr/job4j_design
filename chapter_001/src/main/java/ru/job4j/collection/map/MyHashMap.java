@@ -25,18 +25,22 @@ public class MyHashMap<K, V> {
     }
 
     /*
-    Массив ячеек хэш-таблицы.
+        Массив ячеек хэш-таблицы.
      */
-    private Node[] hashArray;
+    private Node<K, V>[] hashArray;
     /*
-    Текущий размер хэш-таблицы.
+        Текущий размер хэш-таблицы.
      */
     private int arraySize;
-
+    /*
+       Порог заполнения хэш-таблицы, после которого её размер увеличивается.
+     */
+    private float threshold;
 
     private void resize() {
-        hashArray = new Node[CAPACITY];
+        hashArray = (Node<K,V>[])new Node[CAPACITY];
         arraySize = hashArray.length;
+        threshold = arraySize * 0.75f;
     }
 
     /**
@@ -82,11 +86,11 @@ public class MyHashMap<K, V> {
     }
 
     private Node<K, V> getNode(K key) {
-        Node[] tab = hashArray;
+        Node<K, V>[] tab = hashArray;
         int h = hashFunc(key.hashCode());
         if (tab != null && hashArray[h] != null) {
-            Node first = tab[h];
-            K k = (K) first.key;
+            Node<K, V> first = tab[h];
+            K k = first.key;
             if (first.hash == key.hashCode() && k.equals(key)) {
                 return this.hashArray[h];
             }
@@ -99,11 +103,11 @@ public class MyHashMap<K, V> {
      * @param key ключ.
      * @return true если удаление успешно инача false.
      */
-    public boolean delete(K key) {
-        int hash = key.hashCode();
+    boolean delete(K key) {
+        int hash = hashFunc(key.hashCode());
         Node<K, V> element = hashArray[hash];
         if (element != null) {
-            if (element.hash == hash && element.key.equals(key)) {
+            if (element.hash == key.hashCode() && element.key.equals(key)) {
                 hashArray[hash] = null;
                 return true;
             }
