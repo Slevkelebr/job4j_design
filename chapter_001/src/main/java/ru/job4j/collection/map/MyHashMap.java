@@ -12,9 +12,11 @@ import java.util.NoSuchElementException;
  * @since 22.09.2020
  */
 
-public class MyHashMap<K, V> implements Iterable<K>{
+public class MyHashMap<K, V> implements Iterable<K> {
 
     private static final int CAPACITY = 7;
+
+    private static final float LOAD_FACTORY = 0.75f;
 
     static class Node<K, V> {
         final int hash;
@@ -48,22 +50,21 @@ public class MyHashMap<K, V> implements Iterable<K>{
     private float threshold;
 
     private void resize() {
-        Node<K,V>[] oldTab = hashArray;
-        int capacity = CAPACITY;
+        Node<K, V>[] oldTab = hashArray;
         if (arraySize > 0 && size >= threshold) {
-            hashArray = (Node<K,V>[])new Node[capacity << 1];//удваиваем capacity
+            hashArray = (Node<K, V>[]) new Node[arraySize << 1]; //удваиваем размер хэш-таблицы.
             this.size = 0;
             arraySize = hashArray.length;
-            threshold = arraySize * 0.75f;
+            threshold = arraySize * LOAD_FACTORY;
             for (var el : oldTab) {
                 if (el != null) {
                     insert(el.key, el.value);
                 }
             }
         } else {
-            hashArray = (Node<K, V>[]) new Node[capacity];
+            hashArray = (Node<K, V>[]) new Node[CAPACITY];
             arraySize = hashArray.length;
-            threshold = arraySize * 0.75f;
+            threshold = arraySize * LOAD_FACTORY;
         }
     }
 
