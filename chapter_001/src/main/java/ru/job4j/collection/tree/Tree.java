@@ -1,9 +1,11 @@
 package ru.job4j.collection.tree;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * Класс реализует древовидную структуру данных.
+ *
  * @author Frolov Sergey (Slevkelebr@yandex.ru)
  * @version 0.3
  * @since 25.09.2020
@@ -17,16 +19,21 @@ class Tree<E> implements SimpleTree<E> {
     }
 
     public boolean isBinary() {
+        return findByPredicate(p -> p.children.size() > 2).isEmpty();
+    }
+
+    private Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
+        Optional<Node<E>> rsl = Optional.empty();
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(this.root);
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
-            if (el.children.size() > 2) {
-                return false;
+            if (condition.test(el)) {
+                rsl = Optional.of(el);
             }
             data.addAll(el.children);
         }
-        return true;
+        return rsl;
     }
 
     @Override
@@ -44,17 +51,6 @@ class Tree<E> implements SimpleTree<E> {
 
     @Override
     public Optional<Node<E>> findBy(E value) {
-        Optional<Node<E>> rsl = Optional.empty();
-        Queue<Node<E>> data = new LinkedList<>();
-        data.offer(this.root);
-        while (!data.isEmpty()) {
-            Node<E> el = data.poll();
-            if (el.value.equals(value)) {
-                rsl = Optional.of(el);
-                break;
-            }
-            data.addAll(el.children);
-        }
-        return rsl;
+        return findByPredicate(p -> p.value.equals(value));
     }
 }
