@@ -29,4 +29,31 @@ public class TreeTest {
                 is(false)
         );
     }
+
+    @Test
+    public void whenTreeIsNotBinary() {
+        Tree<Integer> tree = new Tree<>(5);
+        tree.add(5, 2);
+        tree.add(5, 6);
+        tree.add(6, 1);
+        tree.add(6, 3);
+        tree.add(6, 7);
+        assertThat(
+                tree.isBinary(),
+                is(false)
+        );
+    }
+
+    @Test
+    public void whenTreeIsBinary() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(2, 1);
+        tree.add(2, 3);
+        assertThat(
+                tree.isBinary(),
+                is(true)
+        );
+    }
 }

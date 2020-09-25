@@ -5,8 +5,8 @@ import java.util.*;
 /**
  * Класс реализует древовидную структуру данных.
  * @author Frolov Sergey (Slevkelebr@yandex.ru)
- * @version 0.2
- * @since 24.09.2020
+ * @version 0.3
+ * @since 25.09.2020
  */
 
 class Tree<E> implements SimpleTree<E> {
@@ -14,6 +14,19 @@ class Tree<E> implements SimpleTree<E> {
 
     Tree(final E root) {
         this.root = new Node<>(root);
+    }
+
+    public boolean isBinary() {
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this.root);
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            if (el.children.size() > 2) {
+                return false;
+            }
+            data.addAll(el.children);
+        }
+        return true;
     }
 
     @Override
