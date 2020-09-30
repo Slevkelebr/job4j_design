@@ -20,7 +20,7 @@ public class AnalizeTest {
                 new Analize.User(4, "Le")
         );
         Analize analize = new Analize();
-        Analize.Info info= analize.diff(previos, current);
+        Analize.Info info = analize.diff(previos, current);
         assertThat(1, is(info.deleted));
         assertThat(1, is(info.changed));
         assertThat(1, is(info.added));
