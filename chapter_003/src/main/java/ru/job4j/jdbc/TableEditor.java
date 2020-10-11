@@ -1,7 +1,7 @@
 package ru.job4j.jdbc;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
@@ -11,21 +11,23 @@ public class TableEditor implements AutoCloseable {
 
     private final Properties properties;
 
-    public TableEditor(Properties properties) throws ClassNotFoundException {
+    public TableEditor(Properties properties) throws ClassNotFoundException, IOException {
         this.properties = properties;
         initConnection();
     }
 
-    private void initConnection() throws ClassNotFoundException {
+    private void initConnection() throws ClassNotFoundException, IOException {
         Class.forName("org.postgresql.Driver");
-        try (FileInputStream in = new FileInputStream("c:\\projects\\job4j_design\\chapter_003\\src\\main\\resources\\app.properties")) {
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
             properties.load(in);
             String url = properties.getProperty("jdbc.url");
             String login = properties.getProperty("jdbc.username");
             String password = properties.getProperty("jdbc.password");
-            connection = DriverManager.getConnection(url, login, password);
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
+            try {
+                connection = DriverManager.getConnection(url, login, password);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -109,4 +111,5 @@ public class TableEditor implements AutoCloseable {
             connection.close();
         }
     }
+
 }
