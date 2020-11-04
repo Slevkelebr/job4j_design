@@ -34,24 +34,26 @@ public class FreezeStrBenchmark {
     @Benchmark
     public static boolean testEqSort(MyState state) {
         boolean rsl = true;
-        if(state.left.length() != state.right.length()) {
+        if (state.left.length() != state.right.length()) {
             return false;
         }
         char[] ch1 = state.left.toCharArray();
         char[] ch2 = state.right.toCharArray();
         Arrays.sort(ch1);
         Arrays.sort(ch2);
-        for (int i = 0; i < ch1.length; i++)
-            if (ch1[i] != ch2[i])
+        for (int i = 0; i < ch1.length; i++) {
+            if (ch1[i] != ch2[i]) {
                 rsl = false;
+            }
+        }
         return rsl;
     }
 
     @Benchmark
     public static boolean testEqCheckChar(MyState state) {
         int[] letters = new int[256];
-        char[] left_array = state.left.toCharArray();
-        for (char c : left_array) {
+        char[] leftArray = state.left.toCharArray();
+        for (char c : leftArray) {
             letters[c]++;
         }
         for (int i = 0; i < state.right.length(); i++) {
